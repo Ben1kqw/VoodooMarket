@@ -1,0 +1,76 @@
+﻿
+    <div class="container">
+        <div style="margin: 50px 0">
+        @if (persons != null && persons.Length > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Wiek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var person in persons)
+                    {
+                        <tr>
+                            <th>@person.Number</th>
+                            <td>@person.LastName</td>
+                            <td>@person.FirstName</td>
+                            <td>@person.Age</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h4>Brak osób w systemie</h4>
+        }
+        </div>
+    </div>
+
+
+
+
+@code {
+
+    Person[]? persons;
+
+    protected override void OnInitialized()
+    {
+        var data = new List<Person>
+        {
+            new Person(1, "Mark", "Otto", 34),
+            new Person(2, "Jacob", "Thornton", 30),
+            new Person(3, "Larry", "Novell", 29),
+            new Person(4, "Mary", "Hudson", 67),
+            new Person(5, "Jan", "Kowalski", 53),
+            new Person(6, "Zofia", "Nowak", 24),
+        };
+
+        persons = data.OrderBy(p => p.LastName).ToArray();
+    }
+
+
+    class Person
+    {
+        public Person(int number, string firstName, string lastName, int age)
+        {
+            Number = number;
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
+        }
+
+        public int Number { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public int Age { get; set; }
+    }
+
+}
+

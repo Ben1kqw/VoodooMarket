@@ -1,0 +1,116 @@
+﻿<div class="main-container">
+    <div class="product-header">
+        <div class="product-image-container">
+            <img src="img/pubg_mobile_cover.jpg" alt="PUBG Mobile" class="product-cover-image" />
+            
+        </div>
+        <div class="product-details-header">
+            <h2>Direct Topup - PUBG Mobile UC (Global)</h2>
+            <div class="rating">
+                <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
+            </div>
+        </div>
+        <div class="purchase-summary">
+            <div class="total-price-box">
+                <span class="label">Total price:</span>
+                <span class="price">$0.90</span>
+            </div>
+            <div class="uid-input-group">
+                <input type="text" placeholder="* Enter your UID" class="uid-input" />
+                <label for="uid-input" class="enter-uid-label">Enter your UID</label>
+            </div>
+            <div class="actions">
+                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i>Add to cart</button>
+                <button class="buy-now-btn">Buy now</button>
+            </div>
+            <p class="terms-text">By clicking "Buy", you accept the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></p>
+            <div class="social-actions">
+                <a href="#" class="action-icon"><i class="fas fa-heart"></i></a>
+                <a href="#" class="action-icon"><i class="fas fa-share-alt"></i></a>
+                <a href="#" class="action-icon"><i class="fas fa-question-circle"></i>Ask a question</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="options-section">
+        <h3>Options:</h3>
+        <div class="options-grid">
+            @foreach (var option in UcOptions)
+            {
+                <div class="uc-option @(option.IsSelected ? "selected" : "")" @onclick="() => SelectOption(option)">
+                    <span class="uc-amount">@option.UcAmount UC</span>
+                    @if (option.DiscountPercentage > 0)
+                    {
+                    }
+                    <img src="img/uc_bundle_image.webp" alt="UC Bundle" class="uc-bundle-image" />
+                    <div class="price-details">
+                        <span class="base-price">@option.BasePrice.ToString("F2") $</span>
+                        @if (option.BonusUc > 0)
+                        {
+                            <span class="bonus-uc">+@option.BonusUc UC</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="description-section">
+        <h3 class="section-title">PUBG Mobile UC Top-Up</h3>
+        <p>Purchase PUBG Mobile UC and enjoy in-game features such as Lucky Spin and Season Pass! PUBG UCs are credited directly to your account upon purchase.</p>
+        <p>PUBG MOBILE: The original Battle Royale, the first and the best!</p>
+        <p class="important-note">Important Note: Not for Japanese / Korean / Taiwan / Vietnam servers.</p>
+
+        <h3 class="section-title">How to top-up PUBG Mobile UC?</h3>
+        <ol class="how-to-list">
+            <li>Select the Unknown Cash UC denomination.</li>
+            <li>Enter your PUBG Mobile Player ID.</li>
+            <li>Check out and select your payment method.</li>
+            <li>Once payment made, the <strong>PUBG Mobile UC</strong> you purchased will be credited to your PUBG Mobile Account shortly.</li>
+        </ol>
+    </div>
+    </div>
+
+@code {
+    private List<UcOption> UcOptions = new List<UcOption>();
+    private UcOption SelectedUcOption { get; set; }
+
+    protected override void OnInitialized()
+    {
+        UcOptions = new List<UcOption>
+        {
+            new UcOption { Id = 1, UcAmount = 10, BasePrice = 0.90m, BonusUc = 0, DiscountPercentage = 0, IsSelected = true },
+            new UcOption { Id = 2, UcAmount = 60, BasePrice = 0.92m, BonusUc = 0, DiscountPercentage = 0 },
+            new UcOption { Id = 3, UcAmount = 300, BasePrice = 4.62m, BonusUc = 25, DiscountPercentage = 0 },
+            new UcOption { Id = 4, UcAmount = 600, BasePrice = 9.24m, BonusUc = 60, DiscountPercentage = 36 },
+            new UcOption { Id = 5, UcAmount = 900, BasePrice = 14.29m, BonusUc = 85, DiscountPercentage = 0 },
+            new UcOption { Id = 6, UcAmount = 1200, BasePrice = 19.24m, BonusUc = 120, DiscountPercentage = 0 },
+            new UcOption { Id = 7, UcAmount = 1500, BasePrice = 23.29m, BonusUc = 300, DiscountPercentage = 0 },
+            new UcOption { Id = 8, UcAmount = 2000, BasePrice = 32.04m, BonusUc = 460, DiscountPercentage = 0 },
+            new UcOption { Id = 9, UcAmount = 3000, BasePrice = 46.99m, BonusUc = 600, DiscountPercentage = 0 },
+            new UcOption { Id = 10, UcAmount = 5000, BasePrice = 77.99m, BonusUc = 1000, DiscountPercentage = 0 },
+            new UcOption { Id = 11, UcAmount = 6000, BasePrice = 93.99m, BonusUc = 1900, DiscountPercentage = 0 },
+            new UcOption { Id = 12, UcAmount = 10000, BasePrice = 155.99m, BonusUc = 2500, DiscountPercentage = 0 }
+        };
+        SelectedUcOption = UcOptions.FirstOrDefault(o => o.IsSelected);
+    }
+
+    private void SelectOption(UcOption option)
+    {
+        if (SelectedUcOption != null)
+        {
+            SelectedUcOption.IsSelected = false;
+        }
+        option.IsSelected = true;
+        SelectedUcOption = option;
+    }
+    public class UcOption
+    {
+        public int Id { get; set; }
+        public int UcAmount { get; set; }
+        public decimal BasePrice { get; set; }
+        public int BonusUc { get; set; }
+        public int DiscountPercentage { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
+}
